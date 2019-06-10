@@ -12,14 +12,40 @@
  *
  */
 
-diameter=16;
-width=8;
-height=1;
-bulge=0.4;
-corner_radius=0.4;
+/* butterfly parameters */
+bufferfly_height=1;
+butterfly_size=20;
 
-ring(diameter/2, width, height, bulge, corner_radius);
-*profile(width, height, bulge, corner_radius);
+/* ring parameters */
+ring_diameter=16;
+ring_width=8;
+ring_height=1;
+ring_bulge=0.4;
+ring_corner_radius=0.4;
+
+butterfly(bufferfly_height, butterfly_size);
+
+*ring(ring_diameter/2, ring_width, ring_height, ring_bulge, ring_corner_radius);
+*profile(ring_width, ring_height, ring_bulge, ring_corner_radius);
+
+module butterfly(height=1, size=20) {
+  linear_extrude(height) butterfly_shape(size);
+}
+
+module butterfly_shape(size) {
+  resize([size, size, 1]) union() {
+    square(8, center=true);
+    symmetric() {
+      translate([5, 4, 0]) circle(d=12);
+      translate([4, -5, 0]) circle(d=9);
+    }
+  }
+}
+
+module symmetric() {
+  children();
+  mirror([1, 0, 0]) children();
+}
 
 module ring(radius= 5, width=25, height=20, bulge=3, corner_radius=3) {
   rotate_extrude() translate([radius, 0, 0]) rotate([0, 0, -90]) profile(width, height, bulge, corner_radius);
