@@ -26,7 +26,7 @@ bufferfly_height=1;
 butterfly_size=20;
 butterfly_stem_height= 5;
 butterfly_stem_diameter=6;
-tolerance=0.3;
+tolerance=0.4;
 
 /* ring parameters */
 ring_diameter=16;
