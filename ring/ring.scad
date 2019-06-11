@@ -67,9 +67,12 @@ module connector(height, diameter) {
   cylinder(h=height, d=diameter);
 }
 
-module ring(radius= 5, width=25, height=20, bulge=3, corner_radius=3, connector_diameter=20) {
+module ring(radius=5, width=25, height=20, bulge=3, corner_radius=3, connector_diameter=20) {
   difference () {
-    rotate_extrude() translate([radius, 0, 0]) rotate([0, 0, -90]) profile(width, height, bulge, corner_radius);
+    union() {
+      rotate_extrude() translate([radius, 0, 0]) rotate([0, 0, -90]) profile(width, height, bulge, corner_radius);
+      translate([radius, 0, 0]) rotate([0, 90, 0]) cylinder(h=height+bulge, d=width);
+    }
     rotate([0, 90, 0]) cylinder(h=2*radius, d=connector_diameter);
   }
 }
